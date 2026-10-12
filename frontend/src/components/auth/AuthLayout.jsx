@@ -1,162 +1,151 @@
 import { Link } from 'react-router-dom';
-import {
-  GraduationCap, ShieldCheck, Activity, Users, Quote,
-  Sun, Moon, Globe,
-} from 'lucide-react';
+import { GraduationCap, Sun, Moon, Globe, ShieldCheck, Activity, Quote } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
+import Typewriter from '../Typewriter';
+import CountUp from '../CountUp';
 
 export default function AuthLayout({ children }) {
-  const { darkMode, toggleDarkMode, lang, toggleLang, t } = useTheme();
+  const { t, darkMode, toggleDarkMode, lang, toggleLang } = useTheme();
 
   return (
-    <div className="min-h-screen flex">
-      {/* ========== LEFT CINEMATIC PANEL ========== */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden text-white">
-        {/* Animated Background Image */}
-        <div className="absolute inset-0 overflow-hidden">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-[#F8FAFC] dark:bg-[#0B0F19]">
+      {/* ========== LEFT BRAND PANEL ========== */}
+      <div className="relative hidden lg:flex lg:w-1/2 xl:w-[52%] flex-col justify-between overflow-hidden text-white">
+        <div className="absolute inset-0">
           <img
             src="/auth.jpg"
-            alt="Campus"
-            className="absolute inset-0 w-full h-full object-cover animate-kenburns"
+            alt=""
+            className="w-full h-full object-cover scale-105 animate-[kenburns_22s_ease-in-out_infinite_alternate]"
           />
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#064E3B]/90 via-[#04382B]/85 to-[#064E3B]/60" />
+          <div className="absolute inset-0 bg-black/25" />
         </div>
 
-        {/* Multi-layer Emerald Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#064E3B]/90 via-[#04382B]/80 to-[#022c22]/50" />
-        <div className="absolute inset-0 bg-black/25" />
-        <div className="absolute inset-0 backdrop-blur-[2px]" />
-
-        {/* Content */}
-        <div className="relative z-10 flex flex-col h-full p-10 xl:p-14">
-          {/* Brand */}
-          <div className="flex items-center gap-3">
+        <div className="relative z-10 flex flex-col h-full p-8 xl:p-12">
+          <Link to="/" className="flex items-center gap-3 shrink-0">
             <div className="w-11 h-11 rounded-xl bg-[#F8E7C9] flex items-center justify-center shadow-lg">
               <GraduationCap className="w-6 h-6 text-[#064E3B]" />
             </div>
             <div>
-              <h1 className="font-bold text-lg tracking-tight leading-none drop-shadow-md">
-                {t('appName') || 'Kijani'}
-              </h1>
-              <p className="text-[11px] text-emerald-200/90 font-medium tracking-wide uppercase mt-0.5">
-                {t('appTagline') || 'EduTrack Enterprise'}
+              <p className="text-lg font-bold tracking-tight text-white leading-none">EduTrack</p>
+              <p className="text-[10px] font-semibold tracking-[0.18em] text-[#F8E7C9]/90 uppercase mt-0.5">
+                Enterprise
               </p>
             </div>
+          </Link>
+
+          <div className="mt-10">
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-white/10 backdrop-blur-md border border-white/20 text-white/95">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Sovereign Campus Platform · SOC-2 Certified
+            </span>
           </div>
 
-          {/* Floating Badge */}
-          <div className="mt-10 inline-flex self-start">
-            <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#F8E7C9] text-xs font-medium shadow-lg">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot" />
-              🎓 Sovereign Campus Platform · SOC-2 Certified
-            </div>
-          </div>
-
-          {/* Hero Copy */}
-          <div className="mt-8 max-w-md">
-            <h2 className="text-3xl xl:text-4xl font-bold leading-tight tracking-tight drop-shadow-lg">
-              {t('sovereignTitle') || 'Sovereign Student Data, Engineered for Global Campuses.'}
-            </h2>
-            <p className="mt-4 text-emerald-100/80 text-sm leading-relaxed drop-shadow">
-              {t('sovereignSubtitle') ||
-                'Automate enrollment, attendance, gradebooks and fee collection under one secure institutional platform.'}
+          <div className="mt-8 max-w-lg">
+            <h1 className="text-3xl xl:text-4xl font-bold leading-[1.15] tracking-tight text-white drop-shadow-lg min-h-[3.2em]">
+              <Typewriter
+                key={`auth-title-${lang}`}
+                text={t('authHeroTitle')}
+                speed={32}
+                startDelay={300}
+                showCursor={true}
+              />
+            </h1>
+            <p className="mt-4 text-sm xl:text-base text-white/80 leading-relaxed max-w-md min-h-[3em]">
+              <Typewriter
+                key={`auth-sub-${lang}`}
+                text={t('authHeroSubtitle')}
+                speed={16}
+                startDelay={2800}
+                showCursor={false}
+              />
             </p>
           </div>
 
-          {/* Floating Metric Glass Card */}
-          <div className="mt-10 max-w-sm animate-float-soft">
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 shadow-2xl hover:-translate-y-1 transition-transform duration-300 space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center">
-                  <Users className="w-5 h-5 text-[#F8E7C9]" />
-                </div>
+          <div className="mt-auto max-w-sm rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 p-5 shadow-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center">
+                <GraduationCap className="w-5 h-5 text-[#F8E7C9]" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-white tabular-nums">
+                  <CountUp end={1248} duration={2000} />
+                </p>
+                <p className="text-[11px] text-white/70">{t('authActiveRecords')}</p>
+              </div>
+            </div>
+
+            <div className="space-y-2 text-xs text-white/80">
+              <div className="flex items-center gap-2">
+                <Activity className="w-3.5 h-3.5 text-emerald-300 shrink-0" />
+                <span>
+                  <CountUp end={99.9} decimals={1} suffix="%" duration={1800} /> Uptime · Latency &lt;{' '}
+                  <CountUp end={50} suffix="ms" duration={1600} />
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-300 shrink-0" />
+                <span>SOC-2 Type II Certified</span>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-white/15">
+              <div className="flex gap-2">
+                <Quote className="w-3.5 h-3.5 text-[#F8E7C9] shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-xl font-bold text-white">1,248</p>
-                  <p className="text-[11px] text-emerald-200/80">
-                    {t('activeRecords') || 'Active Records'}
+                  <p className="text-[11px] text-white/85 italic leading-relaxed">
+                    &ldquo;EduTrack transformed our campus workflows overnight.&rdquo;
+                  </p>
+                  <p className="text-[10px] text-white/55 mt-1">
+                    — Dr. Elizabeth M., Academic Registrar
                   </p>
                 </div>
               </div>
-
-              <div className="flex items-center gap-2 text-xs text-emerald-100/90">
-                <Activity className="w-3.5 h-3.5 text-emerald-300" />
-                <span>99.9% Uptime · Latency &lt; 50ms</span>
-              </div>
-
-              <div className="flex items-center gap-2 text-xs">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#F8E7C9]" />
-                <span className="text-[#F8E7C9] font-medium">SOC-2 Type II Certified</span>
-              </div>
-
-              <div className="pt-3 border-t border-white/10 flex gap-2">
-                <Quote className="w-4 h-4 text-emerald-300/50 shrink-0 mt-0.5" />
-                <p className="text-[11px] text-emerald-100/70 italic leading-relaxed">
-                  "EduTrack transformed our campus workflows overnight."
-                  <span className="block mt-1 not-italic text-emerald-200/50 font-medium">
-                    — Dr. Elizabeth M., Academic Registrar
-                  </span>
-                </p>
-              </div>
             </div>
           </div>
-
-          {/* Version */}
-          <p className="mt-auto pt-8 text-[10px] text-emerald-300/40 font-medium tracking-wider">
-            v1.0.0 Enterprise Edition
-          </p>
         </div>
       </div>
 
-      {/* ========== RIGHT FORM PANEL ========== */}
-      <div className="flex-1 flex flex-col min-h-screen bg-[#F8FAFC]/95 dark:bg-[#0F172A]/95 backdrop-blur-xl">
-        {/* Mobile top banner (image collapsed) */}
-        <div className="lg:hidden relative h-36 overflow-hidden">
-          <img
-            src="/auth.jpg"
-            alt="Campus"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#064E3B]/80 to-[#064E3B]/95" />
-          <div className="relative z-10 flex items-center gap-3 p-5 h-full">
-            <div className="w-10 h-10 rounded-xl bg-[#F8E7C9] flex items-center justify-center">
+      {/* ========== RIGHT FORM PANEL (hakuna frame) ========== */}
+      <div className="flex-1 flex flex-col min-h-screen lg:min-h-0 bg-white dark:bg-[#0B0F19]">
+        {/* Mobile top brand */}
+        <div className="lg:hidden relative h-28 overflow-hidden">
+          <img src="/auth.jpg" alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-[#064E3B]/85 flex items-center px-5 gap-3">
+            <div className="w-9 h-9 rounded-lg bg-[#F8E7C9] flex items-center justify-center">
               <GraduationCap className="w-5 h-5 text-[#064E3B]" />
             </div>
             <div>
-              <h1 className="font-bold text-white text-base">{t('appName') || 'Kijani'}</h1>
-              <p className="text-[10px] text-emerald-200/80 uppercase tracking-wide">
-                {t('appTagline') || 'EduTrack Enterprise'}
-              </p>
+              <p className="text-sm font-bold text-white">EduTrack</p>
+              <p className="text-[10px] text-[#F8E7C9]/90 uppercase tracking-wider">Enterprise</p>
             </div>
           </div>
         </div>
 
-        {/* Top controls */}
-        <div className="flex items-center justify-between px-5 sm:px-10 py-4">
-          <Link
-            to="/app"
-            className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-[#064E3B] dark:hover:text-emerald-400 transition-colors"
+        {/* Lang / theme */}
+        <div className="flex items-center justify-end gap-1.5 px-4 sm:px-8 pt-4">
+          <button
+            type="button"
+            onClick={toggleLang}
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5"
           >
-            ← {t('backToDashboard') || 'Back to Dashboard'}
-          </Link>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={toggleLang}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
-            >
-              <Globe className="w-3.5 h-3.5" />
-              {lang === 'ENG' ? 'SW' : 'ENG'}
-            </button>
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
-            >
-              {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-          </div>
+            <Globe className="w-3.5 h-3.5" />
+            {lang === 'ENG' ? 'SW' : 'ENG'}
+          </button>
+          <button
+            type="button"
+            onClick={toggleDarkMode}
+            className="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5"
+          >
+            {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
         </div>
 
-        {/* Form */}
-        <div className="flex-1 flex items-center justify-center px-5 sm:px-10 py-6 sm:py-8">
-          <div className="w-full max-w-[420px]">{children}</div>
+        {/* Form — bila card/frame */}
+        <div className="flex-1 flex items-center justify-center px-4 sm:px-8 py-6 sm:py-10">
+          <div className="w-full max-w-md">
+            {children}
+          </div>
         </div>
       </div>
     </div>
