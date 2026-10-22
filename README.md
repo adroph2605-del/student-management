@@ -1,182 +1,93 @@
-# EduTrack — Student Management System
+# EduTrack SMS — Student Management System
 
 **Professional Full-Stack MVP**  
-Auspify Full Stack Development Internship — Task 2 (Easy)
+Auspify Full Stack Development Internship — Task 2
 
-A clean, modern Student Information System inspired by enterprise platforms like PowerSchool / EduTrack. Built with production-quality standards for portfolio use.
+Enterprise-style Student Information System inspired by platforms like PowerSchool and Canvas LMS. Built with clean architecture, role-based access, and portfolio-ready UI/UX.
+
+**Live demo:** https://student-management-roan-seven.vercel.app/
 
 ---
 
 ## Tech Stack
 
-| Layer     | Technology                          |
-|-----------|-------------------------------------|
-| Frontend  | React 18 + Vite + Tailwind CSS v4   |
-| Routing   | React Router DOM v6                 |
-| HTTP      | Axios                               |
-| Icons     | Lucide React                        |
-| Toasts    | React Hot Toast                     |
-| Backend   | Node.js + Express.js                |
-| Database  | MongoDB (Atlas recommended)        |
-| ODM       | Mongoose                            |
+| Layer        | Technology                                      |
+| ------------ | ----------------------------------------------- |
+| Frontend     | React 18 + Vite + Tailwind CSS                  |
+| Routing      | React Router DOM                                |
+| HTTP         | Axios                                           |
+| Icons        | Lucide React                                    |
+| i18n         | Custom ENG / SW (ThemeContext)                  |
+| Backend      | Node.js + Express.js                            |
+| Database     | MongoDB Atlas                                   |
+| ODM          | Mongoose                                        |
+| Auth         | JWT + bcryptjs                                  |
+| Roles (RBAC) | `admin` · `faculty` · `student`                 |
 
 ---
 
 ## Features
 
-### Must-Have (Implemented in Frontend)
-- Student List with search & status filter
-- Add Student form (with validation)
-- Edit Student form
-- View Student details / profile
-- Delete Student (with confirmation modal)
-- Status: Active / Inactive / Graduated
-- Responsive design (mobile + desktop)
-- Loading states & Empty states
-- Toast success / error messages
-- Dashboard with stats overview
+### Public
+- Landing page (hero, features, Solutions hub, CTA)
+- ENG / SW language switch
+- Light / Dark mode
+- Auth pages: Register, Login, Forgot Password
+- Role-based registration fields (Admin / Faculty / Student)
 
-### Backend
-- Full REST API for students
-- MongoDB connection via Mongoose
-- Student validation, duplicate-email handling, and proper error status codes
+### Faculty (`/app`)
+- Dashboard (stats, schedule, interventions)
+- Students directory (search, filters, pagination)
+- Student profile (academic, attendance, guardians, fees)
+- Enrollment form
+- Attendance register
+- Gradebook
+- Fees & payments overview
+- Reports
+
+### Student (`/student`)
+- Personal dashboard (GPA, attendance, fee balance)
+- Timetable / grades / attendance / fees / courses / profile / notices
+
+### System Admin (`/admin`)
+- System overview (users, campuses, revenue)
+- Modules: Users, RBAC, Audit, LMS & API, Communications, Branding
+
+### Backend API
+- JWT authentication & role guards
+- Students CRUD + search / pagination
+- Attendance (single + bulk)
+- Grades
+- Fees & payments
+- Dashboard stats (faculty + admin)
 
 ---
 
 ## Project Structure
 
-```
+```text
 student-management-system/
-├── frontend/                  # React + Vite application
+├── frontend/
 │   ├── src/
-│   │   ├── components/        # Reusable UI components
-│   │   ├── pages/             # Route pages
-│   │   ├── services/          # API layer (Axios)
+│   │   ├── components/        # Layout, AuthLayout, UI helpers
+│   │   ├── context/           # ThemeContext, AuthContext
+│   │   ├── data/              # mockData (fallback / demo)
+│   │   ├── i18n/              # en.js, sw.js
+│   │   ├── layouts/           # AdminLayout, StudentLayout
+│   │   ├── pages/             # Landing, auth, faculty, admin, student
+│   │   ├── services/          # Axios API layer
 │   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── index.css
-│   ├── index.html
+│   │   └── main.jsx
 │   ├── package.json
 │   └── vite.config.js
 │
-├── backend/                   # Express API
-│   ├── models/
-│   │   └── Student.js         # Mongoose schema
-│   ├── routes/
-│   │   └── students.js        # Student CRUD routes
-│   ├── server.js              # Connect MongoDB & mount routes
+├── backend/
+│   ├── config/db.js
+│   ├── middleware/            # auth (JWT + RBAC), errorHandler
+│   ├── models/                # User, Student, Attendance, Grade, Fee
+│   ├── routes/                # auth, students, attendance, grades, fees, dashboard
+│   ├── server.js
 │   ├── .env.example
 │   └── package.json
 │
 └── README.md
-```
-
----
-
-## Getting Started
-
-### 1. Backend Setup
-
-```bash
-cd backend
-npm install
-cp .env.example .env
-# Add your MongoDB connection string to .env
-```
-
-Start the backend:
-
-```bash
-npm run dev
-```
-
-API will run on `http://localhost:5000`
-
-### 2. Frontend Setup
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Frontend will run on `http://localhost:5173`
-
-> The Vite config already proxies `/api` requests to `http://localhost:5000`.
-
----
-
-## API Endpoints (to implement)
-
-| Method | Endpoint              | Description          |
-|--------|-----------------------|----------------------|
-| GET    | `/api/students`       | Get all students     |
-| GET    | `/api/students/:id`   | Get one student      |
-| POST   | `/api/students`       | Create student       |
-| PUT    | `/api/students/:id`   | Update student       |
-| DELETE | `/api/students/:id`   | Delete student       |
-
-### Student Data Model
-
-```js
-{
-  name: String,        // required
-  email: String,       // required, unique
-  course: String,
-  age: Number,
-  phone: String,
-  status: String,      // "Active" | "Inactive" | "Graduated" (default: "Active")
-  createdAt: Date,     // auto
-  updatedAt: Date      // auto
-}
-```
-
----
-
-## Design System
-
-- **Primary**: Deep Emerald / Forest Green (`#0b3d2e`, `#047857`)
-- **Background**: Clean white + light gray
-- **Typography**: Inter
-- **Style**: Modern SaaS dashboard (sidebar layout, cards, clean tables)
-- Fully responsive (mobile sidebar drawer + desktop fixed sidebar)
-
----
-
-## Scripts
-
-### Frontend
-```bash
-npm run dev      # Start development server
-npm run build    # Production build
-npm run preview  # Preview production build
-```
-
-### Backend
-```bash
-npm run dev      # Start with nodemon
-npm start        # Start production
-```
-
----
-
-## Notes for Backend Implementation
-
-1. Enable CORS
-2. Use `express.json()` middleware
-3. Return proper HTTP status codes (200, 201, 400, 404, 500)
-4. Handle duplicate email errors gracefully
-5. Use Mongoose `timestamps: true`
-6. Validate required fields on the backend as well
-
----
-
-## Author
-
-Built as part of **Auspify Full Stack Development Internship — Task 2**
-
----
-
-## License
-
-MIT
