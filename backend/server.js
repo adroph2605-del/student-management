@@ -1,41 +1,60 @@
-// ============================================
-// Student Management System - Backend Server
-// Auspify Full Stack Development - Task 2
-// ============================================
-// TODO: Implement the full server logic here
-// ============================================
-
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
+const connectDB = require('./config/db');
+const { notFound, errorHandler } = require('./middleware/errorHandler');
+
+const authRoutes = require('./routes/auth');
+const studentRoutes = require('./routes/students');
+const attendanceRoutes = require('./routes/attendance');
+const gradeRoutes = require('./routes/grades');
+const feeRoutes = require('./routes/fees');
+const dashboardRoutes = require('./routes/dashboard');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    credentials: true,
+  })
+);
 app.use(express.json());
-
-// Routes
-// TODO: Import and use student routes
-// const studentRoutes = require('./routes/students');
-// app.use('/api/students', studentRoutes);
 
 // Health check
 app.get('/', (req, res) => {
-  res.json({ message: 'Student Management System API is running' });
+  res.json({
+    success: true,
+    message: 'EduTrack SMS API is running',
+    version: '1.0.0',
+  });
 });
 
-// Connect to MongoDB and start server
-// TODO: Add MongoDB connection logic
-// mongoose.connect(process.env.MONGODB_URI)
-//   .then(() => {
-//     console.log('Connected to MongoDB');
-//     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-//   })
-//   .catch((err) => console.error('MongoDB connection error:', err));
+// API routes
+app.use('/api/auth', authRoutes);
+app.use('/api/students', studentRoutes);
+app.use('/api/attendance', attendanceRoutes);
+app.use('/api/grades', gradeRoutes);
+app.use('/api/fees', feeRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Errors
+app.use(notFound);
+app.use(errorHandler);
+
+// Start after DB connects
+const start = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`EduTrack API running on http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error('Failed to start server:', err.message);
+    process.exit(1);
+  }
+};
+
+start();

@@ -36,10 +36,10 @@ A clean, modern Student Information System inspired by enterprise platforms like
 - Toast success / error messages
 - Dashboard with stats overview
 
-### Backend (You implement)
+### Backend
 - Full REST API for students
 - MongoDB connection via Mongoose
-- Proper error handling & status codes
+- Student validation, duplicate-email handling, and proper error status codes
 
 ---
 
@@ -59,12 +59,12 @@ student-management-system/
 │   ├── package.json
 │   └── vite.config.js
 │
-├── backend/                   # Express API (skeleton only)
+├── backend/                   # Express API
 │   ├── models/
-│   │   └── Student.js         # ← Implement Mongoose schema
+│   │   └── Student.js         # Mongoose schema
 │   ├── routes/
-│   │   └── students.js        # ← Implement CRUD routes
-│   ├── server.js              # ← Connect MongoDB & mount routes
+│   │   └── students.js        # Student CRUD routes
+│   ├── server.js              # Connect MongoDB & mount routes
 │   ├── .env.example
 │   └── package.json
 │
@@ -81,15 +81,10 @@ student-management-system/
 cd backend
 npm install
 cp .env.example .env
-# Edit .env and add your MongoDB Atlas connection string
+# Add your MongoDB connection string to .env
 ```
 
-Implement the following files:
-- `models/Student.js` — Mongoose schema
-- `routes/students.js` — All 5 CRUD endpoints
-- `server.js` — MongoDB connection + route mounting
-
-Then start the server:
+Start the backend:
 
 ```bash
 npm run dev
