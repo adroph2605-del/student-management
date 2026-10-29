@@ -4,6 +4,8 @@ import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import Students from './pages/Students';
 import StudentDetails from './pages/StudentDetails';
+import EditStudent from './pages/EditStudent';
+import AddStudent from './pages/AddStudent';
 import EnrollmentForm from './pages/EnrollmentForm';
 import Attendance from './pages/Attendance';
 import Fees from './pages/Fees';
@@ -27,19 +29,19 @@ export default function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
-      {/* Faculty / staff (existing) */}
       <Route path="/app" element={<Layout />}>
         <Route index element={<Dashboard />} />
         <Route path="students" element={<Students />} />
         <Route path="students/enroll" element={<EnrollmentForm />} />
+        <Route path="students/add" element={<AddStudent />} />
         <Route path="students/:id" element={<StudentDetails />} />
+        <Route path="students/:id/edit" element={<EditStudent />} />
         <Route path="attendance" element={<Attendance />} />
         <Route path="fees" element={<Fees />} />
         <Route path="gradebook" element={<Gradebook />} />
         <Route path="reports" element={<Reports />} />
       </Route>
 
-      {/* System Admin */}
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<AdminDashboard />} />
         <Route path="campuses" element={<AdminPlaceholder />} />
@@ -52,7 +54,6 @@ export default function App() {
         <Route path="branding" element={<AdminPlaceholder />} />
       </Route>
 
-      {/* Student */}
       <Route path="/student" element={<StudentLayout />}>
         <Route index element={<StudentDashboard />} />
         <Route path="timetable" element={<StudentPlaceholder />} />
